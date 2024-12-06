@@ -1,6 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 import LoginScreen from '@features/auth/LoginScreen';
 import SplashScreen from '@features/auth/SplashScreen';
+import AnimatedTabs from '@features/tabs/AnimatedTabs';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {navigationRef} from '@utils/NavigationUtils';
@@ -23,6 +24,13 @@ const Navigation: FC = () => {
           }}
           name="LoginScreen"
           component={LoginScreen}
+        />
+        <Stack.Screen
+          options={{
+            animation: 'fade',
+          }}
+          name="UserBottomTab"
+          component={AnimatedTabs}
         />
       </Stack.Navigator>
     </NavigationContainer>
