@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/self-closing-comp */
 import React, {FC} from 'react';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
@@ -7,8 +8,8 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useStyles} from 'react-native-unistyles';
 import {tabStyles} from '@unistyles/tabStyles';
 import Animated, {useAnimatedStyle, withTiming} from 'react-native-reanimated';
-import {Colors} from '@unistyles/Constants';
-import {View} from 'react-native';
+import {Colors, screenWidth} from '@unistyles/Constants';
+import {Image, Linking, TouchableOpacity, View} from 'react-native';
 import ScalePress from '@components/ui/ScalePress';
 import {
   DeliveryTabIcon,
@@ -36,6 +37,14 @@ const CustomTabBar: FC<BottomTabBarProps> = props => {
             : withTiming(0, {duration: 300}),
         },
       ],
+    };
+  });
+
+  const indicatorStyle = useAnimatedStyle(() => {
+    const baseLeft = 10;
+    let slideValue = state.index == 3 ? 0.23 : 0.24;
+    return {
+      left: withTiming(baseLeft + state.index * screenWidth * slideValue),
     };
   });
 
@@ -95,6 +104,32 @@ const CustomTabBar: FC<BottomTabBarProps> = props => {
           })}
           <View style={styles.verticalLine} />
         </View>
+
+        <Animated.View
+          style={[
+            styles.slidingIndicator,
+            indicatorStyle,
+            {
+              backgroundColor: isLiveTabFocused
+                ? '#fff'
+                : isVegMode
+                ? Colors.active
+                : Colors.primary,
+            },
+          ]}
+        />
+
+        <TouchableOpacity
+          style={styles.blinkitLogoContainer}
+          activeOpacity={0.9}
+          onPress={() => {
+            Linking.openURL('');
+          }}>
+          <Image
+            source={require('@assets/icons/blinkit.png')}
+            style={styles.blinkitLogo}
+          />
+        </TouchableOpacity>
       </Animated.View>
     </>
   );

@@ -38,7 +38,7 @@ const ScalePress: FC<ScalePressProps> = ({
       onLongPress={onLongPress}
       onPressIn={onPressIn}
       activeOpacity={1}
-      style={style}>
+      style={{...style}}>
       <Animated.View style={{transform: [{scale: scaleValue}], width: '100%'}}>
         {children}
       </Animated.View>
