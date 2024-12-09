@@ -1,4 +1,4 @@
-import {View, SafeAreaView, TouchableOpacity} from 'react-native';
+import {View, SafeAreaView, TouchableOpacity, Image} from 'react-native';
 import React, {FC} from 'react';
 import {useSharedState} from '@features/tabs/SharedContext';
 import {useStyles} from 'react-native-unistyles';
@@ -28,22 +28,42 @@ const LocationHeader: FC = () => {
             iconFamily="MaterialCommunityIcons"
             size={32}
           />
-        </View>
-        <View>
-          <TouchableOpacity style={styles.flexRow}>
-            <CustomText variant="h5" color={textColor} fontFamily="Okra-Bold">
-              Pune, Maharahshtra
+
+          <View>
+            <TouchableOpacity style={styles.flexRow}>
+              <CustomText variant="h5" color={textColor} fontFamily="Okra-Bold">
+                Pune, Maharahshtra
+              </CustomText>
+              <Icon
+                name="chevron-down"
+                color={textColor}
+                iconFamily="MaterialCommunityIcons"
+                size={18}
+              />
+            </TouchableOpacity>
+            <CustomText color={textColor} fontFamily="Okra-Medium">
+              Jalgaon, Maharahshtra
             </CustomText>
-            <Icon
-              name="chevron-down"
-              color={textColor}
-              iconFamily="MaterialCommunityIcons"
-              size={18}
+          </View>
+        </View>
+
+        <View style={styles.flexRowGap}>
+          <TouchableOpacity style={styles.translation}>
+            <Image
+              source={require('@assets/icons/translation.png')}
+              style={styles.translationIcon}
             />
           </TouchableOpacity>
-          <CustomText color={textColor} fontFamily="Okra-Medium">
-            Jalgaon, Maharahshtra
-          </CustomText>
+          <TouchableOpacity style={styles.profileAvatar}>
+            <Image
+              source={require('@assets/icons/golden_circle.png')}
+              style={styles.goldenCircle}
+            />
+            <Image
+              source={require('@assets/images/user.jpg')}
+              style={styles.profileImage}
+            />
+          </TouchableOpacity>
         </View>
       </View>
     </Animated.View>
