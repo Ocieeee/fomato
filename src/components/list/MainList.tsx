@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   NativeScrollEvent,
   NativeSyntheticEvent,
@@ -9,8 +10,11 @@ import RestaurantList from './RestaurantList';
 import {useStyles} from 'react-native-unistyles';
 import {restaurantStyles} from '@unistyles/restuarantStyles';
 import {useSharedState} from '@features/tabs/SharedContext';
-import {useAnimatedStyle, withTiming} from 'react-native-reanimated';
+import Animated, {useAnimatedStyle, withTiming} from 'react-native-reanimated';
 import ExploreSection from '@components/home/ExploreSection';
+import BackToTopButton from '@components/ui/BackToTopButton';
+import {filtersOption} from '@utils/dummyData';
+import SortingAndFilters from '@components/home/SortingAndFilters';
 
 const sectioneData = [
   {title: 'Explore', data: [{}], renderItem: () => <ExploreSection />},
@@ -97,11 +101,28 @@ const MainList: FC = () => {
 
   return (
     <>
+      <Animated.View style={[styles.backToTopButton, backToTopStyle]}>
+        <BackToTopButton onPress={handleScrollToTop} />
+      </Animated.View>
       <SectionList
         sections={sectioneData}
         overScrollMode="always"
         onScroll={handleScroll}
+        ref={sectionListRef}
         bounces={false}
+        renderSectionHeader={({section}) => {
+          if (section.title !== 'Restaurants') {
+            return null;
+          }
+          return (
+            <Animated.View
+              style={[
+                isRestaurantVisiable || isNearEnd ? styles.shadowBottom : null,
+              ]}>
+              <SortingAndFilters menuTitle="sort" options={filtersOption} />
+            </Animated.View>
+          );
+        }}
         nestedScrollEnabled
         showsVerticalScrollIndicator={false}
         keyExtractor={(item, index) => index.toString()}
